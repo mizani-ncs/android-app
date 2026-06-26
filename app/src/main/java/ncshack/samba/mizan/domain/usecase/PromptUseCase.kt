@@ -20,14 +20,14 @@ class PromptUseCase(
         ).execute()
 
         val errors = response.errors
-        if (errors != null && errors.isNotEmpty()) {
+        if (!errors.isNullOrEmpty()) {
             throw Exception(errors.first().message)
         }
 
         val prompt = response.data?.createPrompt ?: return emptyList()
         return prompt.responses
-            ?.mapNotNull { it.cardPush }
-            ?.map { card ->
+            .mapNotNull { it.cardPush }
+            .map { card ->
                 CardDescriptor.fromApolloPayload(
                     id = card.id,
                     cardType = card.cardType,

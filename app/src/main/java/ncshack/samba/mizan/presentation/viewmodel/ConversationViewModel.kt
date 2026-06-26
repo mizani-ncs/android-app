@@ -183,9 +183,7 @@ class ConversationViewModel(
     private fun subscribeToWidgetPush(sessionId: String) {
         subscriptionJob?.cancel()
         subscriptionJob = viewModelScope.launch(Dispatchers.IO) {
-                println("Subscribing... ${sessionId}")
             widgetPushDataSource.subscribe(sessionId).collect { card ->
-                println("Subscribing... ${card}")
                 if (card.cardType == "text") {
                     val text = try {
                         val json = kotlinx.serialization.json.Json.parseToJsonElement(card.payload)
