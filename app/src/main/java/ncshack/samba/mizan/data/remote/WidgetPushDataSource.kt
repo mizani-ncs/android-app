@@ -1,5 +1,6 @@
 package ncshack.samba.mizan.data.remote
 
+import android.util.Log
 import com.apollographql.apollo.ApolloClient
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -13,11 +14,12 @@ class WidgetPushDataSource(
         apolloClient.subscription(WidgetPushSubscription(sessionId = sessionId))
             .toFlow()
             .map { response ->
+                Log.i("WidgetPushDataSource", "$response")
                 val card = response.data?.widgetPush
-                CardDescriptor(
+                CardDescriptor.fromApolloPayload(
                     id = card?.id.orEmpty(),
                     cardType = card?.cardType.orEmpty(),
-                    payload = card?.payload.toString(),
+                    rawPayload = card?.payload,
                 )
             }
 }

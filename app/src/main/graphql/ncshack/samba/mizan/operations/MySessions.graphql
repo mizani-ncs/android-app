@@ -1,0 +1,10 @@
+query MySessions {
+  mySessions {
+    id
+    channel
+    language
+    status
+    createdAt
+    updatedAt
+  }
+}

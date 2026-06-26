@@ -1,0 +1,22 @@
+query PromptsBySession($sessionId: ID!) {
+  promptsBySession(sessionId: $sessionId) {
+    id
+    content
+    inputType
+    sessionId
+    responses {
+      id
+      text
+      type
+      cardPush {
+        id
+        cardType
+        payload
+        sessionId
+        createdAt
+      }
+      createdAt
+    }
+    createdAt
+  }
+}

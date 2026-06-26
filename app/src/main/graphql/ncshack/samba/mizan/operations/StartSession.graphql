@@ -1,0 +1,9 @@
+mutation StartSession($input: StartSessionInput) {
+  startSession(input: $input) {
+    id
+    channel
+    language
+    status
+    createdAt
+  }
+}
