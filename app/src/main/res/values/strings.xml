@@ -26,6 +26,13 @@
     <string name="type_message">Tapez votre message…</string>
     <string name="loading">Chargement…</string>
     <string name="ask_legal_question">Posez votre question juridique…</string>
+    <string name="ask_lexify">Posez votre question a Lexify…</string>
+    <string name="welcome_title">Comment puis-je vous aider avec votre affaire juridique aujourd\'hui?</string>
+    <string name="welcome_subtitle">Décrivez votre situation en arabe ou en français. Je suis là pour vous aider à naviguer le droit algérien.</string>
+    <string name="sessions">Sessions</string>
+    <string name="new_session">Nouvelle session</string>
+    <string name="no_sessions">Aucune session précédente.</string>
+    <string name="session_history">Historique des sessions</string>
 
     <!-- Cards -->
     <string name="book_now">Réserver maintenant</string>

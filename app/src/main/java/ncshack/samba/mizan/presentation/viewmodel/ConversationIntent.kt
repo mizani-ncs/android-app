@@ -5,4 +5,8 @@ sealed interface ConversationIntent {
     data object Submit : ConversationIntent
     data class CardActionTapped(val cardId: String) : ConversationIntent
     data class ChipSelected(val chipText: String) : ConversationIntent
+    data object ToggleSidebar : ConversationIntent
+    data class SelectSession(val sessionId: String) : ConversationIntent
+    data object NewSession : ConversationIntent
+    data object DismissError : ConversationIntent
 }

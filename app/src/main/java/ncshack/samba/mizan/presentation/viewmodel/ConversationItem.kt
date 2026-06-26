@@ -8,6 +8,7 @@ sealed interface ConversationItem {
     data class UserMessage(
         override val id: String,
         val text: String,
+        val isUser: Boolean = true,
     ) : ConversationItem
 
     data class CardGroup(
