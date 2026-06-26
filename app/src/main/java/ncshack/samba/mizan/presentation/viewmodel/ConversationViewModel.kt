@@ -154,25 +154,10 @@ class ConversationViewModel(
 
         viewModelScope.launch {
             try {
-                val cards = promptUseCase(
+                promptUseCase(
                     sessionId = _state.value.currentSessionId.orEmpty(),
                     text = text,
                 )
-                if (cards.isNotEmpty()) {
-                    val cardGroup = ConversationItem.CardGroup(
-                        id = "cards_${System.currentTimeMillis()}",
-                        cards = cards,
-                    )
-                    _state.update {
-                        it.copy(
-                            items = it.items + cardGroup,
-                            isAwaitingResponse = false,
-                        )
-                    }
-                } else {
-                    _state.update { it.copy(isAwaitingResponse = false) }
-                }
-                // subscription still handles additional real-time cards
             } catch (e: Exception) {
                 _state.update { it.copy(isAwaitingResponse = false) }
                 _effect.send(ConversationEffect.ShowError(e.message ?: "Failed to send"))
