@@ -43,6 +43,11 @@ fun NavGraph(
                 onNavigateToBooking = { lawyerId ->
                     navController.navigate(Booking(lawyerId))
                 },
+                onNavigateToAuth = {
+                    navController.navigate(Auth) {
+                        popUpTo<Conversation> { inclusive = true }
+                    }
+                },
             )
         }
     }

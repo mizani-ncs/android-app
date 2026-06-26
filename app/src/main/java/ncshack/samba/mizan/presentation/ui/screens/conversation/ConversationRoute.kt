@@ -16,6 +16,7 @@ fun ConversationRoute(
     viewModel: ConversationViewModel = koinViewModel(),
     onNavigateToLawyerProfile: (String) -> Unit = {},
     onNavigateToBooking: (String) -> Unit = {},
+    onNavigateToAuth: () -> Unit = {},
 ) {
     val state by viewModel.state.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -35,6 +36,9 @@ fun ConversationRoute(
 //                        duration = SnackbarDuration.Short,
 //                    )
                 }
+                is ConversationEffect.NavigateToAuth -> {
+                    onNavigateToAuth()
+                }
             }
         }
     }
@@ -45,5 +49,6 @@ fun ConversationRoute(
         snackbarHostState = snackbarHostState,
         onNavigateToLawyerProfile = onNavigateToLawyerProfile,
         onNavigateToBooking = onNavigateToBooking,
+        onNavigateToAuth = onNavigateToAuth,
     )
 }

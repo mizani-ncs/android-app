@@ -9,4 +9,5 @@ sealed interface ConversationIntent {
     data class SelectSession(val sessionId: String) : ConversationIntent
     data object NewSession : ConversationIntent
     data object DismissError : ConversationIntent
+    data object Logout : ConversationIntent
 }

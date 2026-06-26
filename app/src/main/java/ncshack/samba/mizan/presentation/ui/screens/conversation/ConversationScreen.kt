@@ -35,6 +35,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
@@ -101,6 +102,7 @@ fun ConversationScreen(
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
     onNavigateToLawyerProfile: (String) -> Unit,
     onNavigateToBooking: (String) -> Unit,
+    onNavigateToAuth: () -> Unit = {},
 ) {
     val listState = rememberLazyListState()
     val drawerState = rememberDrawerState(DrawerValue.Closed)
@@ -452,6 +454,12 @@ private fun SessionDrawerContent(
             )
             IconButton({}, colors = IconButtonDefaults.iconButtonColors(contentColor = MaterialTheme.colorScheme.onSurfaceVariant)) {
                 Icon(Icons.Outlined.Settings, null)
+            }
+            IconButton(
+                onClick = { onIntent(ConversationIntent.Logout) },
+                colors = IconButtonDefaults.iconButtonColors(contentColor = MaterialTheme.colorScheme.onSurfaceVariant),
+            ) {
+                Icon(Icons.Default.ExitToApp, null)
             }
         }
     }

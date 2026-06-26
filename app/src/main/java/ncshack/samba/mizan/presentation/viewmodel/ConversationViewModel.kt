@@ -14,6 +14,7 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import ncshack.samba.mizan.data.remote.WidgetPushDataSource
+import ncshack.samba.mizan.domain.repository.AuthRepository
 import ncshack.samba.mizan.domain.usecase.GetMySessionsUseCase
 import ncshack.samba.mizan.domain.usecase.PromptUseCase
 import ncshack.samba.mizan.domain.usecase.PromptsBySessionUseCase
@@ -25,6 +26,7 @@ class ConversationViewModel(
     private val startSessionUseCase: StartSessionUseCase,
     private val getMySessionsUseCase: GetMySessionsUseCase,
     private val promptsBySessionUseCase: PromptsBySessionUseCase,
+    private val authRepository: AuthRepository,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(ConversationUiState())
@@ -58,6 +60,7 @@ class ConversationViewModel(
             is ConversationIntent.SelectSession -> selectSession(event.sessionId)
             is ConversationIntent.NewSession -> initSession()
             is ConversationIntent.DismissError -> _state.update { it.copy(error = null) }
+            is ConversationIntent.Logout -> logout()
         }
     }
 
@@ -197,6 +200,14 @@ class ConversationViewModel(
                     }
                 }
             }
+        }
+    }
+
+    private fun logout() {
+        subscriptionJob?.cancel()
+        authRepository.logout()
+        viewModelScope.launch {
+            _effect.send(ConversationEffect.NavigateToAuth)
         }
     }
 }
