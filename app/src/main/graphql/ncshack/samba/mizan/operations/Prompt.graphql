@@ -1,0 +1,8 @@
+mutation CreatePrompt($input: CreatePromptInput!) {
+  createPrompt(input: $input) {
+    id
+    content
+    inputType
+    sessionId
+  }
+}

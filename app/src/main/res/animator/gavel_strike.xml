@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Sequential set — THREE objectAnimators chained one after another.
+    Keyframes inside objectAnimator are NOT supported in AVD XML files.
+    Use sequential <set> with individual animators instead.
+
+    Phase 1 (0–200ms):   raise up   →  rotation -35°
+    Phase 2 (200–500ms): slam down  →  rotation +12°  (overshoots = impact)
+    Phase 3 (500–650ms): settle     →  rotation   0°
+-->
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:ordering="sequentially">
+
+    <!-- Phase 1: Raise the gavel -->
+    <objectAnimator
+        android:duration="200"
+        android:interpolator="@android:anim/accelerate_interpolator"
+        android:propertyName="rotation"
+        android:valueFrom="0"
+        android:valueTo="-35"
+        android:valueType="floatType" />
+
+    <!-- Phase 2: Strike down (past 0 = overshoot for impact feel) -->
+    <objectAnimator
+        android:duration="300"
+        android:interpolator="@android:anim/accelerate_interpolator"
+        android:propertyName="rotation"
+        android:valueFrom="-35"
+        android:valueTo="12"
+        android:valueType="floatType" />
+
+    <!-- Phase 3: Settle back to rest -->
+    <objectAnimator
+        android:duration="150"
+        android:interpolator="@android:anim/decelerate_interpolator"
+        android:propertyName="rotation"
+        android:valueFrom="12"
+        android:valueTo="0"
+        android:valueType="floatType" />
+
+</set>

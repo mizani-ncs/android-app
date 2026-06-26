@@ -1,3 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Mizan</string>
+    <string name="app_name">Lexify</string>
+
+    <!-- Auth -->
+    <string name="sign_in">Se connecter</string>
+    <string name="sign_up">S\'inscrire</string>
+    <string name="create_account">Créer un compte</string>
+    <string name="login_title">Reconnecter</string>
+    <string name="login_subtitle">Bienvenue! Connectez-vous pour accéder à votre compte.</string>
+    <string name="register_title">S\'inscrire</string>
+    <string name="register_subtitle">Créez votre compte pour commencer</string>
+    <string name="or_login_with">Ou connectez-vous avec</string>
+    <string name="or_signup_with">Ou inscrivez-vous avec</string>
+    <string name="already_have_account">Vous avez déjà un compte?</string>
+    <string name="dont_have_account">Pas encore de compte?</string>
+    <string name="email">E-mail</string>
+    <string name="password">Mot de passe</string>
+    <string name="confirm_password">Confirmer le mot de passe</string>
+    <string name="forgot_password">Mot de passe oublié?</string>
+    <string name="no_account">Pas encore de compte?</string>
+    <string name="has_account">Déjà un compte?</string>
+
+    <!-- Conversation -->
+    <string name="send_message">Envoyer un message</string>
+    <string name="type_message">Tapez votre message…</string>
+    <string name="loading">Chargement…</string>
+    <string name="ask_legal_question">Posez votre question juridique…</string>
+
+    <!-- Cards -->
+    <string name="book_now">Réserver maintenant</string>
+    <string name="view_profile">Voir le profil</string>
+    <string name="upload_file">Télécharger le fichier</string>
+    <string name="take_photo">Prendre une photo</string>
+    <string name="download">Télécharger</string>
+    <string name="preview">Aperçu</string>
+    <string name="add_to_calendar">Ajouter au calendrier</string>
+    <string name="confirm_booking">Confirmer la réservation</string>
+
+    <!-- Documents -->
+    <string name="documents">Documents</string>
+    <string name="no_documents">Aucun document pour l\'instant.</string>
+    <string name="open">Ouvrir</string>
+    <string name="saved_to_downloads">Enregistré dans Téléchargements</string>
+
+    <!-- Lawyer -->
+    <string name="lawyer_profile">Profil de l\'avocat</string>
+    <string name="specialty">Spécialité</string>
+    <string name="wilaya">Wilaya</string>
+    <string name="rating">Note</string>
+    <string name="bio">Biographie</string>
+    <string name="languages">Langues parlées</string>
+    <string name="fee_range">Fourchette de frais</string>
+
+    <!-- Booking -->
+    <string name="booking">Réservation</string>
+    <string name="select_date">Sélectionner la date</string>
+    <string name="select_time">Sélectionner l\'heure</string>
+    <string name="booking_confirmed">Réservation confirmée!</string>
+
+    <!-- Calendar -->
+    <string name="deadline_added">Échéance ajoutée au calendrier</string>
+
+    <!-- Errors -->
+    <string name="error_network">Erreur réseau. Veuillez réessayer.</string>
+    <string name="no_internet">Pas de connexion Internet.</string>
+    <string name="error_unknown">Une erreur s\'est produite.</string>
+    <string name="required_field">Ce champ est requis.</string>
+    <string name="invalid_email">E-mail invalide.</string>
+    <string name="passwords_dont_match">Les mots de passe ne correspondent pas.</string>
+    <string name="password_too_short">Le mot de passe doit contenir au moins 8 caractères.</string>
+
+    <!-- Permissions -->
+    <string name="permission_camera">Caméra requise pour prendre des photos de documents.</string>
+    <string name="permission_storage">Accès au stockage requis pour télécharger des documents.</string>
+    <string name="permission_calendar">Accès au calendrier requis pour ajouter des échéances.</string>
+    <string name="permission_settings">Activez les paramètres pour accorder la permission.</string>
+
+    <!-- Navigation -->
+    <string name="nav_conversation">Conversation</string>
+    <string name="nav_documents">Documents</string>
+    <string name="nav_profile">Profil</string>
 </resources>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">لكسيفاي</string>
+
+    <!-- Auth -->
+    <string name="sign_in">تسجيل الدخول</string>
+    <string name="sign_up">إنشاء حساب</string>
+    <string name="create_account">إنشاء حسابك</string>
+    <string name="login_title">سجّل دخولك إلى حسابك</string>
+    <string name="login_subtitle">مرحبًا! سجّل دخولك للوصول إلى حسابك.</string>
+    <string name="register_title">أنشئ حسابك للبدء</string>
+    <string name="or_login_with">أو سجّل الدخول باستخدام</string>
+    <string name="or_signup_with">أو سجّل باستخدام</string>
+    <string name="already_have_account">لديك حساب بالفعل؟</string>
+    <string name="dont_have_account">ليس لديك حساب بعد؟</string>
+    <string name="email">البريد الإلكتروني</string>
+    <string name="password">كلمة المرور</string>
+    <string name="confirm_password">تأكيد كلمة المرور</string>
+    <string name="forgot_password">نسيت كلمة المرور؟</string>
+    <string name="no_account">ليس لديك حساب؟</string>
+    <string name="has_account">لديك حساب بالفعل؟</string>
+
+    <!-- Conversation -->
+    <string name="send_message">إرسال رسالة</string>
+    <string name="type_message">اكتب رسالتك…</string>
+    <string name="loading">جاري التحميل…</string>
+    <string name="ask_legal_question">اطرح سؤالك القانوني…</string>
+
+    <!-- Cards -->
+    <string name="book_now">احجز الآن</string>
+    <string name="view_profile">عرض الملف الشخصي</string>
+    <string name="upload_file">رفع ملف</string>
+    <string name="take_photo">التقاط صورة</string>
+    <string name="download">تنزيل</string>
+    <string name="preview">معاينة</string>
+    <string name="add_to_calendar">إضافة إلى التقويم</string>
+    <string name="confirm_booking">تأكيد الحجز</string>
+
+    <!-- Documents -->
+    <string name="documents">المستندات</string>
+    <string name="no_documents">لا توجد مستندات بعد.</string>
+    <string name="open">فتح</string>
+    <string name="saved_to_downloads">تم الحفظ في التنزيلات</string>
+
+    <!-- Lawyer -->
+    <string name="lawyer_profile">ملف المحامي</string>
+    <string name="specialty">التخصص</string>
+    <string name="wilaya">الولاية</string>
+    <string name="rating">التقييم</string>
+    <string name="bio">السيرة الذاتية</string>
+    <string name="languages">اللغات المحكية</string>
+    <string name="fee_range">نطاق الأتعاب</string>
+
+    <!-- Booking -->
+    <string name="booking">الحجز</string>
+    <string name="select_date">اختر التاريخ</string>
+    <string name="select_time">اختر الوقت</string>
+    <string name="booking_confirmed">تم تأكيد الحجز!</string>
+
+    <!-- Calendar -->
+    <string name="deadline_added">تمت إضافة الموعد النهائي إلى التقويم</string>
+
+    <!-- Errors -->
+    <string name="error_network">خطأ في الشبكة. يرجى المحاولة مرة أخرى.</string>
+    <string name="no_internet">لا يوجد اتصال بالإنترنت.</string>
+    <string name="error_unknown">حدث خطأ ما.</string>
+    <string name="required_field">هذا الحقل مطلوب.</string>
+    <string name="invalid_email">بريد إلكتروني غير صالح.</string>
+    <string name="passwords_dont_match">كلمتا المرور غير متطابقتين.</string>
+    <string name="password_too_short">يجب أن تكون كلمة المرور 8 أحرف على الأقل.</string>
+
+    <!-- Permissions -->
+    <string name="permission_camera">يتطلب الكاميرا لالتقاط صور المستندات.</string>
+    <string name="permission_storage">يتطلب الوصول إلى التخزين لتنزيل المستندات.</string>
+    <string name="permission_calendar">يتطلب الوصول إلى التقويم لإضافة المواعيد النهائية.</string>
+    <string name="permission_settings">فعّل الإعدادات لمنح الإذن.</string>
+
+    <!-- Navigation -->
+    <string name="nav_conversation">المحادثة</string>
+    <string name="nav_documents">المستندات</string>
+    <string name="nav_profile">الملف الشخصي</string>
+</resources>

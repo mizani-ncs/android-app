@@ -1,0 +1,327 @@
+schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+}
+
+scalar DateTime
+scalar JSON
+
+type Query {
+  lawyer(id: ID!): Lawyer!
+  lawyers(filter: LawyerFilterInput): [Lawyer!]!
+  currentUser: User!
+  prompt(id: ID!): Prompt!
+  promptsBySession(sessionId: ID!): [Prompt!]!
+  responsesByPrompt(promptId: ID!): [Response!]!
+  session(id: ID!): Session!
+  mySessions: [Session!]!
+  myBookings(pagination: PaginationInput): PaginatedBookings!
+  myDeadlines(pagination: PaginationInput): PaginatedDeadlines!
+  myDocuments(pagination: PaginationInput): PaginatedDocuments!
+  myNotifications(pagination: PaginationInput, unreadOnly: Boolean): PaginatedNotifications!
+  unreadNotificationCount: Int!
+  booking(id: ID!): Booking!
+  deadline(id: ID!): Deadline!
+  document(id: ID!): Document!
+  ledgerEntry(id: ID!): LedgerEntry!
+  ledgerForSession(sessionId: ID!): [LedgerEntry!]!
+  cardPush(id: ID!): CardPush!
+  cardPushesBySession(sessionId: ID!): [CardPush!]!
+}
+
+type Mutation {
+  login(loginInput: LoginInput!): AuthResponse!
+  register(registerInput: RegisterInput!): AuthResponse!
+  forgotPassword(email: String!): MessageResponse!
+  resetPassword(resetPasswordInput: ResetPasswordInput!): MessageResponse!
+  refreshTokens: AuthResponse!
+  startSession(input: StartSessionInput): Session!
+  claimSession(id: ID!): Session!
+  closeSession(id: ID!): Session!
+  createPrompt(input: CreatePromptInput!): Prompt!
+  book(input: BookInput!): Booking!
+  cancelBooking(id: ID!): Booking!
+  updateBookingStatus(id: ID!, status: String!): Booking!
+  createDocument(input: CreateDocumentInput!): Document!
+  deleteDocument(id: ID!): Boolean!
+  saveDeadline(input: SaveDeadlineInput!): Deadline!
+  updateDeadline(id: ID!, input: UpdateDeadlineInput!): Deadline!
+  deleteDeadline(id: ID!): Boolean!
+  createLawyer(createLawyerInput: CreateLawyerInput!): Lawyer!
+  updateLawyer(id: ID!, updateLawyerInput: UpdateLawyerInput!): Lawyer!
+  deleteLawyer(id: ID!): Boolean!
+  markNotificationRead(id: ID!): Notification!
+  markAllNotificationsRead: Int!
+}
+
+type Subscription {
+  widgetPush(sessionId: ID!): CardPush!
+  notificationPush(userId: ID!): Notification!
+}
+
+type AuthResponse {
+  accessToken: String
+  refreshToken: String!
+  user: User!
+}
+
+type User {
+  id: String!
+  email: String
+  role: String!
+}
+
+type MessageResponse {
+  message: String!
+}
+
+type CardPush {
+  id: ID!
+  cardType: String!
+  payload: JSON!
+  sessionId: ID!
+  createdAt: DateTime!
+}
+
+type Lawyer {
+  id: String!
+  fullName: String!
+  email: String
+  wilaya: String!
+  bio: String
+  barNumber: String
+  specialties: [String!]!
+  languages: [String!]!
+  profilePictureUrl: String
+  rating: Float
+  consultationFee: Int
+  yearsExperience: Int
+  isStub: Boolean!
+  isVerified: Boolean!
+  createdAt: DateTime!
+}
+
+type Booking {
+  id: ID!
+  userId: ID!
+  lawyerId: ID!
+  lawyer: Lawyer!
+  meetingAt: DateTime!
+  notes: String
+  sessionId: ID
+  status: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Deadline {
+  id: ID!
+  userId: ID!
+  title: String!
+  description: String
+  type: String!
+  dueAt: DateTime!
+  triggerEventDate: DateTime
+  isSavedToCalendar: Boolean!
+  calendarEventId: String
+  sourceCitation: String
+  sessionId: ID
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Document {
+  id: ID!
+  userId: ID!
+  title: String!
+  docType: String!
+  kind: String!
+  mimeType: String
+  sizeBytes: Int
+  storageRef: String
+  sourceCitation: String
+  immudbHash: String
+  sessionId: ID
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Session {
+  id: ID!
+  userId: ID
+  channel: String!
+  language: String!
+  status: String!
+  anonymousFingerprint: String
+  claimedAt: DateTime
+  closedAt: DateTime
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Prompt {
+  id: ID!
+  content: String
+  inputType: String!
+  sessionId: ID!
+  createdAt: DateTime!
+}
+
+type Response {
+  id: ID!
+  promptId: ID!
+  text: String
+  type: String!
+  cardPush: CardPush
+  createdAt: DateTime!
+}
+
+type LedgerEntry {
+  id: ID!
+  sessionId: ID!
+  turnId: ID
+  kind: String!
+  immudbKey: String!
+  immudbHash: String!
+  createdAt: DateTime!
+}
+
+type Notification {
+  id: ID!
+  userId: ID!
+  type: String!
+  title: String!
+  body: String!
+  data: JSON
+  readAt: DateTime
+  createdAt: DateTime!
+}
+
+type PaginatedBookings {
+  items: [Booking!]!
+  total: Int!
+  hasMore: Boolean!
+}
+
+type PaginatedDeadlines {
+  items: [Deadline!]!
+  total: Int!
+  hasMore: Boolean!
+}
+
+type PaginatedDocuments {
+  items: [Document!]!
+  total: Int!
+  hasMore: Boolean!
+}
+
+type PaginatedNotifications {
+  items: [Notification!]!
+  total: Int!
+  hasMore: Boolean!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+input RegisterInput {
+  email: String!
+  password: String!
+  confirmPassword: String!
+}
+
+input ResetPasswordInput {
+  token: String!
+  password: String!
+}
+
+input StartSessionInput {
+  language: String
+  anonymousFingerprint: String
+}
+
+input CreatePromptInput {
+  sessionId: ID!
+  content: String
+  inputType: String
+}
+
+input BookInput {
+  lawyerId: ID!
+  meetingAt: DateTime!
+  notes: String
+  sessionId: ID
+}
+
+input CreateDocumentInput {
+  title: String!
+  docType: String!
+  kind: String!
+  mimeType: String
+  sizeBytes: Int
+  storageRef: String
+  sourceCitation: String
+  sessionId: ID
+}
+
+input SaveDeadlineInput {
+  title: String!
+  description: String
+  type: String!
+  dueAt: DateTime!
+  triggerEventDate: DateTime
+  sourceCitation: String
+  sessionId: ID
+}
+
+input UpdateDeadlineInput {
+  title: String
+  description: String
+  type: String
+  dueAt: DateTime
+  isSavedToCalendar: Boolean
+  sourceCitation: String
+}
+
+input LawyerFilterInput {
+  specialty: String
+  wilaya: String
+  language: String
+}
+
+input PaginationInput {
+  skip: Int
+  take: Int
+}
+
+input CreateLawyerInput {
+  fullName: String!
+  email: String
+  wilaya: String!
+  bio: String
+  barNumber: String
+  specialties: [String!]!
+  languages: [String!]!
+  profilePictureUrl: String
+  rating: Float
+  consultationFee: Int
+  yearsExperience: Int
+  isStub: Boolean
+}
+
+input UpdateLawyerInput {
+  fullName: String
+  wilaya: String
+  bio: String
+  barNumber: String
+  specialties: [String!]
+  languages: [String!]
+  profilePictureUrl: String
+  rating: Float
+  consultationFee: Int
+  yearsExperience: Int
+  isVerified: Boolean
+}

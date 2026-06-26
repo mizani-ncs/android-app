@@ -1,0 +1,18 @@
+query LawyerById($id: ID!) {
+  lawyer(id: $id) {
+    id
+    fullName
+    email
+    wilaya
+    bio
+    barNumber
+    specialties
+    languages
+    profilePictureUrl
+    rating
+    consultationFee
+    yearsExperience
+    isStub
+    isVerified
+  }
+}

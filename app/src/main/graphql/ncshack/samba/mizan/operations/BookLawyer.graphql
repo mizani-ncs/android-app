@@ -1,0 +1,8 @@
+mutation Book($input: BookInput!) {
+  book(input: $input) {
+    id
+    status
+    meetingAt
+    lawyerId
+  }
+}

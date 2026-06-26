@@ -1,0 +1,9 @@
+subscription WidgetPush($sessionId: ID!) {
+  widgetPush(sessionId: $sessionId) {
+    id
+    cardType
+    payload
+    sessionId
+    createdAt
+  }
+}

@@ -1,0 +1,9 @@
+mutation SaveDeadline($input: SaveDeadlineInput!) {
+  saveDeadline(input: $input) {
+    id
+    title
+    dueAt
+    type
+    isSavedToCalendar
+  }
+}

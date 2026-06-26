@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.apollo)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.com.google.devtools.ksp)
     alias(libs.plugins.kotlin.serialization)
@@ -61,6 +62,13 @@ kotlin {
     }
 }
 
+apollo {
+    service("main") {
+        packageName.set("ncshack.samba.mizan")
+        schemaFile.set(file("src/main/graphql/schema.graphqls"))
+    }
+}
+
 room {
     schemaDirectory("$projectDir/schemas")
 }
@@ -84,6 +92,12 @@ dependencies {
     implementation(libs.androidx.material.icons.extended)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.datastore.preferences)
+    implementation(libs.androidx.security.crypto)
+    implementation(libs.apollo.kotlin)
+    implementation(libs.apollo.kotlin.http.cache)
+    implementation(libs.apollo.kotlin.normalized.cache)
+    implementation(libs.apollo.kotlin.normalized.cache.sqlite)
+//    implementation(libs.apollo.kotlin.subscriptions)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -105,7 +119,6 @@ dependencies {
     implementation(libs.koin.androidx.workmanager)
     implementation(libs.androidx.collection)
     implementation(libs.androidx.collection.ktx)
-    implementation(libs.disk.lru.cache)
     implementation(libs.bundles.ktor)
     coreLibraryDesugaring(libs.desugar.jdk.libs)
     implementation(libs.androidx.animation.graphics)
