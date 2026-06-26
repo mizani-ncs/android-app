@@ -1,20 +1,16 @@
 package ncshack.samba.mizan.presentation.ui.screens.conversation
 
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import ncshack.samba.mizan.domain.model.CardDescriptor
@@ -27,68 +23,43 @@ fun ContextCard(
 ) {
     val payload = parseContextPayload(card.payload)
 
-    ElevatedCard(
-        modifier = modifier.fillMaxWidth(),
-        shape = MaterialTheme.shapes.medium,
-        colors = CardDefaults.elevatedCardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant,
-        ),
-        elevation = CardDefaults.elevatedCardElevation(defaultElevation = 1.dp),
+    SharedCard(
+        title = "Context",
+        cardColor = CardColor.PURPLE,
+        badge = "Legal Context",
+        modifier = modifier,
     ) {
-        CardHeader(
-            title = payload.title,
-            badge = "Legal Context",
+        Text(
+            text = payload.text,
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onSurface,
         )
 
-        CardBody {
-            Text(
-                text = payload.content,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurface,
-            )
+        HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp))
 
-            Spacer(modifier = Modifier.height(8.dp))
+        Text(
+            text = payload.disclaimer,
+            style = MaterialTheme.typography.labelSmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
 
-            if (payload.citation.isNotEmpty()) {
-                Text(
-                    text = payload.citation,
-                    style = MaterialTheme.typography.labelMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Text(
-                text = "This information is for guidance only and does not constitute legal advice.",
-                style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-        }
-
-        IconButton(onClick = onDismiss) {
-            Icon(
-                imageVector = Icons.Default.Close,
-                contentDescription = "Dismiss",
-                tint = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-        }
+        Spacer(modifier = Modifier.height(8.dp))
     }
 }
 
 private data class ContextPayload(
-    val title: String,
-    val content: String,
-    val citation: String,
+    val text: String,
+    val disclaimer: String,
+    val language: String,
 )
 
 private fun parseContextPayload(payload: String): ContextPayload = try {
     val json = Json.parseToJsonElement(payload).jsonObject
     ContextPayload(
-        title = json["title"]?.jsonPrimitive?.content ?: "Context",
-        content = json["content"]?.jsonPrimitive?.content ?: "",
-        citation = json["citation"]?.jsonPrimitive?.content ?: "",
+        text = json["text"]?.jsonPrimitive?.content ?: "",
+        disclaimer = json["disclaimer"]?.jsonPrimitive?.content ?: "Ceci n'est pas un avis juridique.",
+        language = json["language"]?.jsonPrimitive?.content ?: "fr",
     )
 } catch (_: Exception) {
-    ContextPayload(title = "Context", content = payload, citation = "")
+    ContextPayload(text = payload, disclaimer = "Ceci n'est pas un avis juridique.", language = "fr")
 }

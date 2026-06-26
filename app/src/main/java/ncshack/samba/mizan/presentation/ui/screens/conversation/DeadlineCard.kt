@@ -5,11 +5,8 @@ import android.provider.CalendarContract
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,8 +21,6 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import ncshack.samba.mizan.domain.model.CardDescriptor
-import java.text.SimpleDateFormat
-import java.util.Locale
 
 @Composable
 fun DeadlineCard(
@@ -37,58 +32,40 @@ fun DeadlineCard(
     val context = LocalContext.current
     var isAdded by remember { mutableStateOf(false) }
 
-    Card(
-        modifier = modifier.fillMaxWidth(),
-        shape = MaterialTheme.shapes.medium,
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainer,
-        ),
+    SharedCard(
+        title = "Deadline",
+        cardColor = CardColor.RED,
+        modifier = modifier,
     ) {
-        CardHeader(title = "Deadline")
+        Text(
+            text = payload.title,
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onSurface,
+        )
+        Spacer(modifier = Modifier.height(4.dp))
+        Text(
+            text = payload.date,
+            style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
 
-        CardBody {
-            Text(
-                text = payload.label,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurface,
-            )
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = payload.date,
-                style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-            if (payload.context.isNotEmpty()) {
-                Spacer(modifier = Modifier.height(4.dp))
-                Text(
-                    text = payload.context,
-                    style = MaterialTheme.typography.labelMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
-        }
-
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(12.dp))
 
         if (!isAdded) {
             Button(
                 onClick = {
                     val intent = Intent(Intent.ACTION_INSERT).apply {
                         data = CalendarContract.Events.CONTENT_URI
-                        putExtra(CalendarContract.Events.TITLE, payload.label)
-                        putExtra(CalendarContract.Events.DESCRIPTION, payload.context)
+                        putExtra(CalendarContract.Events.TITLE, payload.title)
                     }
                     context.startActivity(intent)
                     isAdded = true
                     onAddedToCalendar()
                 },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
+                modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.primary,
                 ),
-                shape = MaterialTheme.shapes.small,
             ) {
                 Text("Add to calendar")
             }
@@ -97,29 +74,22 @@ fun DeadlineCard(
                 text = "Added to calendar",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
             )
         }
-
-        Spacer(modifier = Modifier.height(12.dp))
     }
 }
 
 private data class DeadlinePayload(
-    val label: String,
+    val title: String,
     val date: String,
-    val context: String,
-    val deadlineId: String,
 )
 
 private fun parseDeadlinePayload(payload: String): DeadlinePayload = try {
     val json = Json.parseToJsonElement(payload).jsonObject
     DeadlinePayload(
-        label = json["label"]?.jsonPrimitive?.content ?: "Deadline",
+        title = json["title"]?.jsonPrimitive?.content ?: "Deadline",
         date = json["date"]?.jsonPrimitive?.content ?: "",
-        context = json["context"]?.jsonPrimitive?.content ?: "",
-        deadlineId = json["deadlineId"]?.jsonPrimitive?.content ?: "",
     )
 } catch (_: Exception) {
-    DeadlinePayload(label = "Deadline", date = "", context = "", deadlineId = "")
+    DeadlinePayload(title = "Deadline", date = "")
 }

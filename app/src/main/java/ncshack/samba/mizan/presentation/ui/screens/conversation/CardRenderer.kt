@@ -2,6 +2,8 @@ package ncshack.samba.mizan.presentation.ui.screens.conversation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
 import ncshack.samba.mizan.domain.model.CardDescriptor
 
 @Composable
@@ -13,43 +15,70 @@ fun CardRenderer(
     modifier: Modifier = Modifier,
 ) {
     when (card.cardType) {
-        "LAWYER_CAROUSEL" -> LawyerCarouselCard(
+        "text" -> MessageBubble(
+            text = extractTextPayload(card.payload),
+            isUser = false,
+            modifier = modifier,
+        )
+        "info" -> InfoCard(
+            card = card,
+            modifier = modifier,
+        )
+        "lawyer_carousel" -> LawyerCarouselCard(
             card = card,
             onNavigateToLawyerProfile = onNavigateToLawyerProfile,
             onNavigateToBooking = onNavigateToBooking,
             modifier = modifier,
         )
-        "SUBMIT_DOCUMENT" -> SubmitDocumentCard(
+        "submit_document" -> SubmitDocumentCard(
             card = card,
             onUploadTap = onActionTapped,
-            onPhotoTap = onActionTapped,
             modifier = modifier,
         )
-        "DOWNLOAD_FILE" -> DownloadFileCard(
+        "download_file" -> DownloadFileCard(
             card = card,
             onDownload = onActionTapped,
-            onPreview = onActionTapped,
             modifier = modifier,
         )
-        "DEADLINE" -> DeadlineCard(
+        "deadline" -> DeadlineCard(
             card = card,
             onAddedToCalendar = onActionTapped,
             modifier = modifier,
         )
-        "CONTEXT" -> ContextCard(
+        "context" -> ContextCard(
             card = card,
             onDismiss = onActionTapped,
             modifier = modifier,
         )
-        "CLARIFYING_CHIPS" -> ClarifyingChipsCard(
+        "step" -> ClarifyingChipsCard(
             card = card,
             onChipSelected = { onActionTapped() },
             modifier = modifier,
         )
-        "BOOKING" -> BookingCard(
+        "legal_analysis" -> LegalAnalysisCard(
+            card = card,
+            modifier = modifier,
+        )
+        "knowledge_result" -> KnowledgeResultCard(
+            card = card,
+            modifier = modifier,
+        )
+        "action_required" -> ActionRequiredCard(
+            card = card,
+            onActionTapped = onActionTapped,
+            modifier = modifier,
+        )
+        "booking" -> BookingCard(
             card = card,
             onBookingConfirmed = { onNavigateToBooking(it) },
             modifier = modifier,
         )
     }
+}
+
+private fun extractTextPayload(payload: String): String = try {
+    val json = kotlinx.serialization.json.Json.parseToJsonElement(payload)
+    json.jsonObject["text"]?.jsonPrimitive?.content ?: payload
+} catch (_: Exception) {
+    payload
 }
