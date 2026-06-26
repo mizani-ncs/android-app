@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt">
+
+    <aapt:attr name="android:drawable">
+        <vector
+            android:width="108dp"
+            android:height="108dp"
+            android:viewportWidth="154"
+            android:viewportHeight="154">
+
+            <!--
+                rootGroup: wraps everything so we can animate
+                alpha + scale on the whole icon as an entrance.
+                Pivot at center of the 154x154 viewport.
+                Starts invisible (alpha=0) and small (scaleX/Y=0.6).
+            -->
+            <group
+                android:name="rootGroup"
+                android:alpha="0"
+                android:pivotX="77"
+                android:pivotY="77"
+                android:scaleX="0.6"
+                android:scaleY="0.6">
+
+                <!-- Shield — static -->
+                <path
+                    android:fillColor="#00000000"
+                    android:pathData="M76.789,12.801 C58.553,12.801 46.728,25.722 32.744,30.432 C27.057,32.347 24.214,33.305 23.064,34.655 C21.913,36.004 21.576,37.977 20.902,41.922 C13.691,84.135 29.452,123.162 67.040,138.353 C71.079,139.985 73.098,140.801 76.809,140.801 C80.520,140.801 82.539,139.985 86.578,138.353 C124.163,123.162 139.909,84.135 132.696,41.922 C132.022,37.976 131.685,36.003 130.534,34.654 C129.383,33.304 126.540,32.347 120.855,30.433 C106.865,25.723 95.027,12.801 76.789,12.801 Z"
+                    android:strokeColor="#FEFEFF"
+                    android:strokeLineCap="round"
+                    android:strokeLineJoin="round"
+                    android:strokeWidth="9.6" />
+
+                <!-- gavelGroup: pivot at handle base for the strike rotation -->
+                <group
+                    android:name="gavelGroup"
+                    android:pivotX="62"
+                    android:pivotY="99"
+                    android:rotation="0">
+
+                    <!-- Gavel head -->
+                    <path
+                        android:fillColor="#00000000"
+                        android:pathData="M75.734,77.866 C82.485,84.618 91.378,91.479 91.378,91.479 L103.568,79.288 C103.568,79.288 96.707,70.396 89.956,63.644 C83.204,56.892 74.311,50.031 74.311,50.031 L62.121,62.222 C62.121,62.222 68.982,71.115 75.734,77.866 Z"
+                        android:strokeColor="#FEFEFF"
+                        android:strokeLineCap="round"
+                        android:strokeLineJoin="round"
+                        android:strokeWidth="9.6" />
+
+                    <!-- Handle bottom-left -->
+                    <path
+                        android:fillColor="#00000000"
+                        android:pathData="M75.734,77.866 L54.400,99.200"
+                        android:strokeColor="#FEFEFF"
+                        android:strokeLineCap="round"
+                        android:strokeLineJoin="round"
+                        android:strokeWidth="9.6" />
+
+                    <!-- Handle top-right -->
+                    <path
+                        android:fillColor="#00000000"
+                        android:pathData="M105.600,77.257 L89.346,93.511"
+                        android:strokeColor="#FEFEFF"
+                        android:strokeLineCap="round"
+                        android:strokeLineJoin="round"
+                        android:strokeWidth="9.6" />
+
+                    <!-- Handle upper-left -->
+                    <path
+                        android:fillColor="#00000000"
+                        android:pathData="M76.343,48.000 L60.089,64.254"
+                        android:strokeColor="#FEFEFF"
+                        android:strokeLineCap="round"
+                        android:strokeLineJoin="round"
+                        android:strokeWidth="9.6" />
+
+                </group>
+            </group>
+        </vector>
+    </aapt:attr>
+
+    <!--
+        TARGET 1 — rootGroup
+        Runs three animators in PARALLEL (ordering="together"):
+          - alpha   0 → 1
+          - scaleX  0.6 → 1
+          - scaleY  0.6 → 1
+        All 250ms with a decelerate curve so it feels snappy at the start.
+    -->
+    <target android:name="rootGroup">
+        <aapt:attr name="android:animation">
+            <set xmlns:android="http://schemas.android.com/apk/res/android"
+                android:ordering="together">
+
+                <objectAnimator
+                    android:duration="250"
+                    android:interpolator="@android:anim/decelerate_interpolator"
+                    android:propertyName="alpha"
+                    android:valueFrom="0"
+                    android:valueTo="1"
+                    android:valueType="floatType" />
+
+                <objectAnimator
+                    android:duration="250"
+                    android:interpolator="@android:anim/decelerate_interpolator"
+                    android:propertyName="scaleX"
+                    android:valueFrom="0.6"
+                    android:valueTo="1"
+                    android:valueType="floatType" />
+
+                <objectAnimator
+                    android:duration="250"
+                    android:interpolator="@android:anim/decelerate_interpolator"
+                    android:propertyName="scaleY"
+                    android:valueFrom="0.6"
+                    android:valueTo="1"
+                    android:valueType="floatType" />
+
+            </set>
+        </aapt:attr>
+    </target>
+
+    <!--
+        TARGET 2 — gavelGroup
+        Starts after a 250ms delay (matching the entrance duration)
+        then runs the 3-phase strike sequentially.
+        startOffset is the correct way to delay inside an AVD target.
+    -->
+    <target android:name="gavelGroup">
+        <aapt:attr name="android:animation">
+            <set xmlns:android="http://schemas.android.com/apk/res/android"
+                android:ordering="sequentially">
+
+                <!-- Wait for entrance to finish -->
+                <objectAnimator
+                    android:duration="250"
+                    android:propertyName="rotation"
+                    android:valueFrom="0"
+                    android:valueTo="0"
+                    android:valueType="floatType" />
+
+                <!-- Phase 1: Raise -->
+                <objectAnimator
+                    android:duration="200"
+                    android:interpolator="@android:anim/accelerate_interpolator"
+                    android:propertyName="rotation"
+                    android:valueFrom="0"
+                    android:valueTo="-35"
+                    android:valueType="floatType" />
+
+                <!-- Phase 2: Strike (overshoot) -->
+                <objectAnimator
+                    android:duration="300"
+                    android:interpolator="@android:anim/accelerate_interpolator"
+                    android:propertyName="rotation"
+                    android:valueFrom="-35"
+                    android:valueTo="12"
+                    android:valueType="floatType" />
+
+                <!-- Phase 3: Settle -->
+                <objectAnimator
+                    android:duration="150"
+                    android:interpolator="@android:anim/decelerate_interpolator"
+                    android:propertyName="rotation"
+                    android:valueFrom="12"
+                    android:valueTo="0"
+                    android:valueType="floatType" />
+
+            </set>
+        </aapt:attr>
+    </target>
+
+</animated-vector>

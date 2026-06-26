@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/ic_splash_logo">
+
+    <!--
+        android:name must EXACTLY match android:name="gavelGroup"
+        in ic_splash_logo.xml — it is case-sensitive.
+    -->
+    <target
+        android:name="gavelGroup"
+        android:animation="@animator/gavel_strike" />
+
+</animated-vector>

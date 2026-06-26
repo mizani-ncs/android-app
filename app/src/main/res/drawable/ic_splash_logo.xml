@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="154"
+    android:viewportHeight="154">
+
+    <!-- Shield — static -->
+    <path
+        android:name="shield"
+        android:fillColor="#00000000"
+        android:pathData="M76.789,12.801 C58.553,12.801 46.728,25.722 32.744,30.432 C27.057,32.347 24.214,33.305 23.064,34.655 C21.913,36.004 21.576,37.977 20.902,41.922 C13.691,84.135 29.452,123.162 67.040,138.353 C71.079,139.985 73.098,140.801 76.809,140.801 C80.520,140.801 82.539,139.985 86.578,138.353 C124.163,123.162 139.909,84.135 132.696,41.922 C132.022,37.976 131.685,36.003 130.534,34.654 C129.383,33.304 126.540,32.347 120.855,30.433 C106.865,25.723 95.027,12.801 76.789,12.801 Z"
+        android:strokeColor="#FEFEFF"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:strokeWidth="9.6" />
+
+    <!--
+        gavelGroup: pivot near the handle base at (62, 99).
+        All gavel paths are children so they all rotate together.
+    -->
+    <group
+        android:name="gavelGroup"
+        android:pivotX="62"
+        android:pivotY="99"
+        android:rotation="0">
+
+        <!-- Gavel head -->
+        <path
+            android:fillColor="#00000000"
+            android:pathData="M75.734,77.866 C82.485,84.618 91.378,91.479 91.378,91.479 L103.568,79.288 C103.568,79.288 96.707,70.396 89.956,63.644 C83.204,56.892 74.311,50.031 74.311,50.031 L62.121,62.222 C62.121,62.222 68.982,71.115 75.734,77.866 Z"
+            android:strokeColor="#FEFEFF"
+            android:strokeLineCap="round"
+            android:strokeLineJoin="round"
+            android:strokeWidth="9.6" />
+
+        <!-- Handle bottom-left -->
+        <path
+            android:fillColor="#00000000"
+            android:pathData="M75.734,77.866 L54.400,99.200"
+            android:strokeColor="#FEFEFF"
+            android:strokeLineCap="round"
+            android:strokeLineJoin="round"
+            android:strokeWidth="9.6" />
+
+        <!-- Handle top-right -->
+        <path
+            android:fillColor="#00000000"
+            android:pathData="M105.600,77.257 L89.346,93.511"
+            android:strokeColor="#FEFEFF"
+            android:strokeLineCap="round"
+            android:strokeLineJoin="round"
+            android:strokeWidth="9.6" />
+
+        <!-- Handle upper-left -->
+        <path
+            android:fillColor="#00000000"
+            android:pathData="M76.343,48.000 L60.089,64.254"
+            android:strokeColor="#FEFEFF"
+            android:strokeLineCap="round"
+            android:strokeLineJoin="round"
+            android:strokeWidth="9.6" />
+
+    </group>
+
+</vector>
