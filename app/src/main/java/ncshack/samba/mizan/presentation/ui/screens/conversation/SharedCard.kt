@@ -60,34 +60,38 @@ fun SharedCard(
                 containerColor = MaterialTheme.colorScheme.surface,
             ),
         ) {
-            Column(modifier = Modifier.padding(20.dp)) {
+            Column(modifier = Modifier.fillMaxWidth().padding(20.dp)) {
                 AnimatedVisibility(
+                    modifier = Modifier.fillMaxWidth(),
                     visible = visible.value,
                     enter = fadeIn(animationSpec = tween(delayMillis = 0)) +
                             slideInVertically(animationSpec = tween(delayMillis = 0)) { it / 4 },
                 ) {
-                    Surface(
-                        modifier = Modifier.size(80.dp).align(Alignment.CenterHorizontally),
-                        shape = MaterialShapes.Cookie12Sided.toShape(),
-                        color = MaterialTheme.colorScheme.primaryContainer,
-                    ) {
-                        Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                            Icon(
-                                imageVector = icon,
-                                contentDescription = null,
-                                modifier = Modifier.size(40.dp),
-                                tint = MaterialTheme.colorScheme.onPrimaryContainer,
-                            )
+                    Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+                        Surface(
+                            modifier = Modifier.size(80.dp),
+                            shape = MaterialShapes.Cookie12Sided.toShape(),
+                            color = MaterialTheme.colorScheme.primaryContainer,
+                        ) {
+                            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                                Icon(
+                                    imageVector = icon,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(40.dp),
+                                    tint = MaterialTheme.colorScheme.onPrimaryContainer,
+                                )
+                            }
                         }
                     }
                 }
 
                 AnimatedVisibility(
+                    modifier = Modifier.fillMaxWidth(),
                     visible = visible.value,
                     enter = fadeIn(animationSpec = tween(delayMillis = 100)) +
                             slideInVertically(animationSpec = tween(delayMillis = 100)) { it / 4 },
                 ) {
-                    Column {
+                    Column(modifier = Modifier.fillMaxWidth()) {
                         Spacer(modifier = Modifier.height(16.dp))
                         Text(
                             text = title,
@@ -100,6 +104,7 @@ fun SharedCard(
                 }
 
                 AnimatedVisibility(
+                    modifier = Modifier.fillMaxWidth(),
                     visible = visible.value,
                     enter = fadeIn(animationSpec = tween(delayMillis = 200)) +
                             slideInVertically(animationSpec = tween(delayMillis = 200)) { it / 4 },
