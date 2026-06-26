@@ -165,6 +165,7 @@ type Prompt {
   content: String
   inputType: String!
   sessionId: ID!
+  responses: [Response!]!
   createdAt: DateTime!
 }
 

@@ -4,5 +4,18 @@ mutation CreatePrompt($input: CreatePromptInput!) {
     content
     inputType
     sessionId
+    responses {
+      id
+      text
+      type
+      cardPush {
+        id
+        cardType
+        payload
+        sessionId
+        createdAt
+      }
+      createdAt
+    }
   }
 }
