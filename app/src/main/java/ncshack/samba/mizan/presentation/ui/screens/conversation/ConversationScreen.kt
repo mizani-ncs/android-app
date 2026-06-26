@@ -128,6 +128,9 @@ fun ConversationScreen(
                     onIntent(ConversationIntent.NewSession)
                     scope.launch { drawerState.close() }
                 },
+                onLogout = {
+                    onIntent(ConversationIntent.Logout)
+                }
             )
         },
     ) {
@@ -231,7 +234,6 @@ fun ConversationScreen(
                                             text = item.text,
                                             isUser = item.isUser,
                                         )
-
                                         is ConversationItem.CardGroup -> CardGroup(
                                             cards = item.cards,
                                             onCardActionTapped = { text ->
@@ -327,6 +329,7 @@ private fun SessionDrawerContent(
     currentSessionId: String?,
     onSessionSelected: (String) -> Unit,
     onNewSession: () -> Unit,
+    onLogout: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -456,7 +459,7 @@ private fun SessionDrawerContent(
                 Icon(Icons.Outlined.Settings, null)
             }
             IconButton(
-                onClick = { onIntent(ConversationIntent.Logout) },
+                onClick = onLogout,
                 colors = IconButtonDefaults.iconButtonColors(contentColor = MaterialTheme.colorScheme.onSurfaceVariant),
             ) {
                 Icon(Icons.Default.ExitToApp, null)
