@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "skills": {
+    "apollo-kotlin": {
+      "source": "apollographql/skills",
+      "sourceType": "github",
+      "skillPath": "skills/apollo-kotlin/SKILL.md",
+      "computedHash": "5048680fe89089b764e1ef0def5c20e1f0d805cdb3c88fd6d2640581e24848d5"
+    },
+    "apollo-mcp-server": {
+      "source": "apollographql/skills",
+      "sourceType": "github",
+      "skillPath": "skills/apollo-mcp-server/SKILL.md",
+      "computedHash": "7bf2b3403ef5925e3dd78973b7035317b4957be05d6ef994749f3ab2ad6b1ef5"
+    }
+  }
+}
