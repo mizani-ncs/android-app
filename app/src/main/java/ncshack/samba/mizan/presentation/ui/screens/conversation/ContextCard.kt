@@ -18,7 +18,6 @@ import ncshack.samba.mizan.domain.model.CardDescriptor
 @Composable
 fun ContextCard(
     card: CardDescriptor,
-    onDismiss: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val payload = parseContextPayload(card.payload)

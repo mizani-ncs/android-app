@@ -26,7 +26,7 @@ fun CardGroup(
         cards.forEach { card ->
             CardRenderer(
                 card = card,
-                onActionTapped = { onCardActionTapped(card.id) },
+                onActionTapped = { onCardActionTapped(it) },
                 onNavigateToLawyerProfile = onNavigateToLawyerProfile,
                 onNavigateToBooking = onNavigateToBooking,
             )

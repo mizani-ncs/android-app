@@ -14,17 +14,14 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import ncshack.samba.mizan.data.remote.WidgetPushDataSource
-import ncshack.samba.mizan.domain.repository.AuthRepository
 import ncshack.samba.mizan.domain.usecase.GetMySessionsUseCase
 import ncshack.samba.mizan.domain.usecase.PromptUseCase
 import ncshack.samba.mizan.domain.usecase.PromptsBySessionUseCase
 import ncshack.samba.mizan.domain.usecase.StartSessionUseCase
-import okhttp3.Dispatcher
 
 class ConversationViewModel(
     private val promptUseCase: PromptUseCase,
     private val widgetPushDataSource: WidgetPushDataSource,
-    private val authRepository: AuthRepository,
     private val startSessionUseCase: StartSessionUseCase,
     private val getMySessionsUseCase: GetMySessionsUseCase,
     private val promptsBySessionUseCase: PromptsBySessionUseCase,
@@ -48,7 +45,9 @@ class ConversationViewModel(
                 it.copy(inputText = event.text)
             }
             is ConversationIntent.Submit -> submit()
-            is ConversationIntent.CardActionTapped -> { /* handled in card composables */ }
+            is ConversationIntent.CardActionTapped -> {
+                submit(event.text)
+            }
             is ConversationIntent.ChipSelected -> {
                 _state.update { it.copy(inputText = event.chipText) }
                 submit()
@@ -135,8 +134,8 @@ class ConversationViewModel(
         }
     }
 
-    private fun submit() {
-        val text = _state.value.inputText.trim()
+    private fun submit(prompt: String? = null) {
+        val text = (prompt ?: _state.value.inputText).trim()
         if (text.isEmpty() || _state.value.isAwaitingResponse) return
 
         val userMessage = ConversationItem.UserMessage(

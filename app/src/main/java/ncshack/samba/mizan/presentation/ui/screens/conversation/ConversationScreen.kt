@@ -232,8 +232,8 @@ fun ConversationScreen(
 
                                         is ConversationItem.CardGroup -> CardGroup(
                                             cards = item.cards,
-                                            onCardActionTapped = { cardId ->
-                                                onIntent(ConversationIntent.CardActionTapped(cardId))
+                                            onCardActionTapped = { text ->
+                                                onIntent(ConversationIntent.CardActionTapped(text))
                                             },
                                             onNavigateToLawyerProfile = onNavigateToLawyerProfile,
                                             onNavigateToBooking = onNavigateToBooking,

@@ -373,7 +373,6 @@ private fun ContextCardPreview() {
                     cardType = "context",
                     payload = """{"text":"Selon l'article 73 de la loi 90-11 du 21 avril 1990, tout licenciement sans préavis est considéré comme abusif.","disclaimer":"Ceci n'est pas un avis juridique. Consultez un avocat.","language":"fr"}""",
                 ),
-                onDismiss = {},
             )
         }
     }

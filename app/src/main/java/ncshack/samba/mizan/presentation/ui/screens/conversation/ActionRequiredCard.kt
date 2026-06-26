@@ -20,7 +20,7 @@ import ncshack.samba.mizan.domain.model.CardDescriptor
 @Composable
 fun ActionRequiredCard(
     card: CardDescriptor,
-    onActionTapped: () -> Unit,
+    onActionTapped: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val payload = parseActionPayload(card.payload)
@@ -41,7 +41,9 @@ fun ActionRequiredCard(
 
         payload.actions.forEach { action ->
             Button(
-                onClick = onActionTapped,
+                onClick = {
+                    onActionTapped(action.label)
+                },
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.primary,

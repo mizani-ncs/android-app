@@ -9,7 +9,7 @@ import ncshack.samba.mizan.domain.model.CardDescriptor
 @Composable
 fun CardRenderer(
     card: CardDescriptor,
-    onActionTapped: () -> Unit,
+    onActionTapped: (String) -> Unit,
     onNavigateToLawyerProfile: (String) -> Unit,
     onNavigateToBooking: (String) -> Unit,
     modifier: Modifier = Modifier,
@@ -32,27 +32,28 @@ fun CardRenderer(
         )
         "submit_document" -> SubmitDocumentCard(
             card = card,
-            onUploadTap = onActionTapped,
+            onUploadTap = {},
             modifier = modifier,
         )
         "download_file" -> DownloadFileCard(
             card = card,
-            onDownload = onActionTapped,
+            onDownload = {},
             modifier = modifier,
         )
         "deadline" -> DeadlineCard(
             card = card,
-            onAddedToCalendar = onActionTapped,
+            onAddedToCalendar = {
+                onActionTapped("Added to calendar")
+            },
             modifier = modifier,
         )
         "context" -> ContextCard(
             card = card,
-            onDismiss = onActionTapped,
             modifier = modifier,
         )
         "step" -> ClarifyingChipsCard(
             card = card,
-            onChipSelected = { onActionTapped() },
+            onChipSelected = onActionTapped,
             modifier = modifier,
         )
         "legal_analysis" -> LegalAnalysisCard(
