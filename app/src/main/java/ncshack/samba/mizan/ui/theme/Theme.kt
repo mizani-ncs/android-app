@@ -90,7 +90,7 @@ fun MizanTheme(
     DynamicMaterialTheme(
         isDark = darkTheme,
         primary = Primary,
-        typography = Typography,
+        typography = AppTypography,
         shapes = Shapes,
         content = content,
     )
