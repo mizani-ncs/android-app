@@ -128,4 +128,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.navigation3)
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.androidx.work.runtime.ktx)
+    implementation(libs.composemeshgradient)
+    implementation(libs.haze)
+    implementation(libs.haze.blur)
 }

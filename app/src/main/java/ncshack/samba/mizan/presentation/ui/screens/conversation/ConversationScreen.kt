@@ -1,6 +1,11 @@
 package ncshack.samba.mizan.presentation.ui.screens.conversation
 
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -32,14 +37,28 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.automirrored.filled.List
+import androidx.compose.material.icons.filled.AccountBalance
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Business
+import androidx.compose.material.icons.filled.Description
+import androidx.compose.material.icons.filled.DirectionsCar
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.ExitToApp
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Flight
+import androidx.compose.material.icons.filled.Gavel
 import androidx.compose.material.icons.filled.History
+import androidx.compose.material.icons.filled.House
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.MonetizationOn
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.Work
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.rounded.Person
@@ -70,8 +89,11 @@ import androidx.compose.material3.rememberDrawerState
 import androidx.compose.material3.toShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -85,6 +107,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.delay
+import dev.chrisbanes.haze.ExperimentalHazeApi
+import dev.chrisbanes.haze.HazeInputScale
+import dev.chrisbanes.haze.hazeEffect
+import dev.chrisbanes.haze.rememberHazeState
 import kotlinx.coroutines.launch
 import ncshack.samba.mizan.domain.model.Session
 import ncshack.samba.mizan.presentation.viewmodel.ConversationIntent
@@ -92,9 +119,10 @@ import ncshack.samba.mizan.presentation.viewmodel.ConversationItem
 import ncshack.samba.mizan.presentation.viewmodel.ConversationUiState
 import ncshack.samba.mizan.ui.theme.Primary
 import ncshack.samba.mizan.R
+import ncshack.samba.mizan.presentation.ui.components.MeshBackground
 import ncshack.samba.mizan.presentation.ui.components.expressiveListItemShape
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalHazeApi::class)
 @Composable
 fun ConversationScreen(
     state: ConversationUiState,
@@ -134,148 +162,178 @@ fun ConversationScreen(
             )
         },
     ) {
-        Scaffold(
-            snackbarHost = { SnackbarHost(snackbarHostState) },
-            contentWindowInsets = ScaffoldDefaults.contentWindowInsets.exclude(WindowInsets.systemBars),
-            topBar = {
-                CenterAlignedTopAppBar(
-                    title = {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(4.dp)
-                        ) {
-                            Image(
-                                imageVector = ImageVector.vectorResource(R.drawable.logo),
-                                contentDescription = null,
-                                modifier = Modifier.size(40.dp),
-                                colorFilter = ColorFilter.tint(Primary),
-                            )
-                            Text(
-                                text = stringResource(R.string.app_name),
-                                style = MaterialTheme.typography.headlineSmall,
-                                fontWeight = FontWeight.Bold,
-                                color = Primary,
-                            )
-                        }
-                    },
-                    navigationIcon = {
-                        IconButton(onClick = {
-                            scope.launch { drawerState.open() }
-                        }) {
-                            Icon(Icons.Default.History, null)
-                        }
-                    },
-                    actions = {
-                        IconButton(onClick = {
-                        }) {
-                            Icon(
-                                imageVector = Icons.Outlined.Notifications,
-                                contentDescription = null,
-                            )
-                        }
-                        Box(
-                            Modifier
-                                .padding(end = 8.dp)
-                                .size(36.dp)
-                                .clip(CircleShape)
-                                .background(MaterialTheme.colorScheme.surfaceContainer)
-                        ) {
-                            Icon(
-                                imageVector = Icons.Rounded.Person,
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .size(18.dp)
-                                    .align(Alignment.Center),
-                                tint = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                        }
-                    },
-                    expandedHeight = 80.dp,
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.surface,
-                        titleContentColor = Primary,
-                        navigationIconContentColor = Primary
-                    ),
-                )
-            },
-            containerColor = MaterialTheme.colorScheme.background,
-        ) { padding ->
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(padding),
-            ) {
-                AnimatedContent(
-                    state.items.isEmpty() && !state.isAwaitingResponse,
-                    Modifier.fillMaxSize()
-                ) {
-                    if (it) {
-                        WelcomeContent()
-                    } else {
-                        LazyColumn(
-                            state = listState,
-                            modifier = Modifier.fillMaxWidth(),
-                            contentPadding = WindowInsets.navigationBars.add(
-                                WindowInsets(
-                                    bottom = 140.dp,
-                                    left = 16.dp,
-                                    right = 16.dp
+        Box(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surface)) {
+            MeshBackground(
+                //state.isAwaitingResponse
+                true,
+                Modifier.fillMaxSize()
+            )
+            Scaffold(
+                snackbarHost = { SnackbarHost(snackbarHostState) },
+                contentWindowInsets = ScaffoldDefaults.contentWindowInsets.exclude(WindowInsets.systemBars),
+                topBar = {
+                    CenterAlignedTopAppBar(
+                        title = {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(4.dp)
+                            ) {
+                                Image(
+                                    imageVector = ImageVector.vectorResource(R.drawable.logo),
+                                    contentDescription = null,
+                                    modifier = Modifier.size(40.dp),
+                                    colorFilter = ColorFilter.tint(Primary),
                                 )
-                            ).asPaddingValues(),
-                            verticalArrangement = Arrangement.spacedBy(16.dp)
-                        ) {
-                            items(
-                                items = state.items,
-                                key = { it.id },
-                            ) { item ->
-                                Box(modifier = Modifier.animateItem()) {
-                                    when (item) {
-                                        is ConversationItem.UserMessage -> MessageBubble(
-                                            text = item.text,
-                                            isUser = item.isUser,
-                                        )
-                                        is ConversationItem.CardGroup -> CardGroup(
-                                            cards = item.cards,
-                                            onCardActionTapped = { text ->
-                                                onIntent(ConversationIntent.CardActionTapped(text))
-                                            },
-                                            onNavigateToLawyerProfile = onNavigateToLawyerProfile,
-                                            onNavigateToBooking = onNavigateToBooking,
+                                Text(
+                                    text = stringResource(R.string.app_name),
+                                    style = MaterialTheme.typography.headlineSmall,
+                                    fontWeight = FontWeight.Bold,
+                                    color = Primary,
+                                )
+                            }
+                        },
+                        navigationIcon = {
+                            IconButton(onClick = {
+                                scope.launch { drawerState.open() }
+                            }) {
+                                Icon(Icons.Default.History, null)
+                            }
+                        },
+                        actions = {
+                            IconButton(onClick = {
+                            }) {
+                                Icon(
+                                    imageVector = Icons.Outlined.Notifications,
+                                    contentDescription = null,
+                                )
+                            }
+                            Box(
+                                Modifier
+                                    .padding(end = 8.dp)
+                                    .size(36.dp)
+                                    .clip(CircleShape)
+                                    .background(MaterialTheme.colorScheme.surfaceContainer)
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Rounded.Person,
+                                    contentDescription = null,
+                                    modifier = Modifier
+                                        .size(18.dp)
+                                        .align(Alignment.Center),
+                                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            }
+                        },
+                        expandedHeight = 80.dp,
+                        modifier = Modifier.hazeEffect(state = rememberHazeState()) {
+                            inputScale = HazeInputScale.Auto
+                            drawContentBehind = true
+                            canDrawArea = { true }
+                        },
+                        colors = TopAppBarDefaults.topAppBarColors(
+                            containerColor = Color.Transparent,
+                            titleContentColor = Primary,
+                            navigationIconContentColor = Primary
+                        ),
+                    )
+                },
+                containerColor = Color.Transparent,
+            ) { padding ->
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(padding),
+                ) {
+                    AnimatedContent(
+                        state.items.isEmpty() && !state.isAwaitingResponse,
+                        Modifier.fillMaxSize()
+                    ) {
+                        if (it) {
+                            WelcomeContent(onIntent = onIntent)
+                        } else {
+                            LazyColumn(
+                                state = listState,
+                                modifier = Modifier.fillMaxWidth(),
+                                contentPadding = WindowInsets.navigationBars.add(
+                                    WindowInsets(
+                                        bottom = 140.dp,
+                                        left = 16.dp,
+                                        right = 16.dp
+                                    )
+                                ).asPaddingValues(),
+                                verticalArrangement = Arrangement.spacedBy(16.dp)
+                            ) {
+                                items(
+                                    items = state.items,
+                                    key = { it.id },
+                                ) { item ->
+                                    Box(modifier = Modifier.animateItem()) {
+                                        when (item) {
+                                            is ConversationItem.UserMessage -> MessageBubble(
+                                                text = item.text,
+                                                isUser = item.isUser,
+                                            )
+                                            is ConversationItem.CardGroup -> CardGroup(
+                                                cards = item.cards,
+                                                onCardActionTapped = { text ->
+                                                    onIntent(ConversationIntent.CardActionTapped(text))
+                                                },
+                                                onNavigateToLawyerProfile = onNavigateToLawyerProfile,
+                                                onNavigateToBooking = onNavigateToBooking,
+                                            )
+                                        }
+                                    }
+                                }
+
+                                if (state.isAwaitingResponse) {
+                                    item(key = "typing_indicator") {
+                                        ShimmerCardSkeleton(
+                                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
                                         )
                                     }
                                 }
                             }
-
-                            if (state.isAwaitingResponse) {
-                                item(key = "typing_indicator") {
-                                    ShimmerCardSkeleton(
-                                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
-                                    )
-                                }
-                            }
                         }
                     }
-                }
 
-                MessageInput(
-                    value = state.inputText,
-                    onValueChange = { onIntent(ConversationIntent.TextChanged(it)) },
-                    onSubmit = { onIntent(ConversationIntent.Submit) },
-                    enabled = !state.isLoadingSessions,
-                    modifier = Modifier
-                        .align(Alignment.BottomCenter)
-                        .navigationBarsPadding()
-                )
+                    MessageInput(
+                        value = state.inputText,
+                        onValueChange = { onIntent(ConversationIntent.TextChanged(it)) },
+                        onSubmit = { onIntent(ConversationIntent.Submit) },
+                        enabled = !state.isLoadingSessions,
+                        modifier = Modifier
+                            .align(Alignment.BottomCenter)
+                            .navigationBarsPadding()
+                    )
+                }
             }
         }
     }
 }
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
+@OptIn(ExperimentalAnimationApi::class, ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 private fun WelcomeContent(
+    onIntent: (ConversationIntent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val suggestions = remember { suggestionPool }
+    val pageSize = 3
+    val totalPages = (suggestions.size + pageSize - 1) / pageSize
+    var pageIndex by remember { mutableStateOf(0) }
+
+    LaunchedEffect(Unit) {
+        while (true) {
+            delay(10_000)
+            pageIndex = (pageIndex + 1) % totalPages
+        }
+    }
+
+    val currentSuggestions = remember(pageIndex) {
+        val start = pageIndex * pageSize
+        suggestions.subList(start, minOf(start + pageSize, suggestions.size))
+    }
+
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -312,15 +370,84 @@ private fun WelcomeContent(
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.SemiBold,
         )
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(20.dp))
         Text(
-            text = "Décrivez votre situation en arabe ou en français. Je suis là pour vous aider à naviguer le droit algérien.",
-            style = MaterialTheme.typography.bodyMedium,
+            text = "Voici quelques suggestions",
+            style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             textAlign = TextAlign.Center,
         )
+        Spacer(modifier = Modifier.height(16.dp))
+        AnimatedContent(
+            targetState = pageIndex,
+            transitionSpec = {
+                fadeIn(animationSpec = tween(400)) togetherWith
+                        fadeOut(animationSpec = tween(400))
+            },
+            label = "suggestions",
+        ) {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(10.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                currentSuggestions.forEach { suggestion ->
+                    Surface(
+                        onClick = {
+                            onIntent(ConversationIntent.TextChanged(suggestion.text))
+                            onIntent(ConversationIntent.Submit)
+                        },
+                        shape = RoundedCornerShape(14.dp),
+                        color = MaterialTheme.colorScheme.surfaceContainer,
+                        tonalElevation = 2.dp,
+                        modifier = Modifier.fillMaxWidth(),
+                    ) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+                        ) {
+                            Icon(
+                                imageVector = suggestion.icon,
+                                contentDescription = null,
+                                modifier = Modifier.size(22.dp),
+                                tint = MaterialTheme.colorScheme.primary,
+                            )
+                            Spacer(modifier = Modifier.width(12.dp))
+                            Text(
+                                text = suggestion.text,
+                                style = MaterialTheme.typography.labelLarge,
+                                color = MaterialTheme.colorScheme.onSurface,
+                            )
+                        }
+                    }
+                }
+            }
+        }
     }
 }
+
+private data class Suggestion(
+    val icon: ImageVector,
+    val text: String,
+)
+
+private val suggestionPool = listOf(
+    Suggestion(Icons.Default.Gavel, "Procédures de divorce"),
+    Suggestion(Icons.Default.AccountBalance, "Droit d'héritage"),
+    Suggestion(Icons.Default.Work, "Conflit de travail"),
+    Suggestion(Icons.Default.House, "Litige foncier"),
+    Suggestion(Icons.Default.Person, "Garde d'enfants"),
+    Suggestion(Icons.Default.Description, "Contrat de location"),
+    Suggestion(Icons.Default.Business, "Création d'entreprise"),
+    Suggestion(Icons.Default.ShoppingCart, "Droits du consommateur"),
+    Suggestion(Icons.Default.DirectionsCar, "Accident de la route"),
+    Suggestion(Icons.Default.Favorite, "Mariage et dot"),
+    Suggestion(Icons.Default.Lock, "Droit pénal"),
+    Suggestion(Icons.Default.MonetizationOn, "Dettes et recouvrement"),
+    Suggestion(Icons.Default.Info, "Droits des victimes"),
+    Suggestion(Icons.Default.Flight, "Droit d'asile"),
+    Suggestion(Icons.Default.Star, "Pension alimentaire"),
+)
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
@@ -462,7 +589,7 @@ private fun SessionDrawerContent(
                 onClick = onLogout,
                 colors = IconButtonDefaults.iconButtonColors(contentColor = MaterialTheme.colorScheme.onSurfaceVariant),
             ) {
-                Icon(Icons.Default.ExitToApp, null)
+                Icon(Icons.AutoMirrored.Filled.ExitToApp, null)
             }
         }
     }
