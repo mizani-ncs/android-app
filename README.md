@@ -9,6 +9,7 @@
 
 - [App Idea](#app-idea)
 - [Architecture & Patterns](#architecture--patterns)
+- [Screenshots](#screenshots)
 - [UI / UX](#ui--ux)
 - [Libraries & Tooling](#libraries--tooling)
 - [Constraints & Requirements](#constraints--requirements)
@@ -41,6 +42,31 @@
 | **Auth** | Email + password with JWT token storage |
 
 ---
+
+## Screenshots
+
+<img width="1080" height="2280" alt="Screenshot_20260627_094457_Lexify" src="https://github.com/user-attachments/assets/5db58edb-7ca5-433e-adff-e82f5a5c88be" />
+<img width="1080" height="2280" alt="Screenshot_20260627_094449_Lexify" src="https://github.com/user-attachments/assets/df8ae65c-bd12-4cbf-ad8e-af7d81c95344" />
+<img width="1080" height="2280" alt="Screenshot_20260627_094445_Lexify" src="https://github.com/user-attachments/assets/948acde1-7093-4c63-872e-532d1e5a5cd4" />
+<img width="1080" height="2280" alt="Screenshot_20260627_094440_Lexify" src="https://github.com/user-attachments/assets/e203d64b-d8eb-4319-8bba-d2b75ea7f514" />
+<img width="1080" height="2280" alt="Screenshot_20260627_094437_Lexify" src="https://github.com/user-attachments/assets/bb10c6c7-c09f-4783-bda1-fbb5c08c87fe" />
+<img width="1080" height="2280" alt="Screenshot_20260627_094434_Lexify" src="https://github.com/user-attachments/assets/f89df7e1-ebc9-4a14-bd83-6d9611091139" />
+<img width="1080" height="2280" alt="Screenshot_20260627_094425_Lexify" src="https://github.com/user-attachments/assets/5a6499d8-0dc2-4db4-a173-a2d0299f8921" />
+<img width="1080" height="2280" alt="Screenshot_20260627_094418_Lexify" src="https://github.com/user-attachments/assets/b53057c4-b8a4-4da1-816f-3dd9578b264d" />
+<img width="1080" height="2280" alt="Screenshot_20260627_094411_Lexify" src="https://github.com/user-attachments/assets/1143db28-ba4f-42f6-85da-542b8cc02ba0" />
+<img width="1080" height="2280" alt="Screenshot_20260627_094406_Lexify" src="https://github.com/user-attachments/assets/cad3315f-3974-4b87-9f11-1e6f5089de48" />
+<img width="1080" height="2280" alt="Screenshot_20260627_094402_Lexify" src="https://github.com/user-attachments/assets/ff68c331-3f44-4b18-9135-e12e5b9fc2da" />
+<img width="1080" height="2280" alt="Screenshot_20260627_094356_Lexify" src="https://github.com/user-attachments/assets/b0ae4af5-d957-431a-a500-f2e1cb23e3f7" />
+<img width="1080" height="2280" alt="Screenshot_20260627_094348_Lexify" src="https://github.com/user-attachments/assets/37c4694b-7389-4bf6-b6c0-0c6292385435" />
+<img width="1080" height="2280" alt="Screenshot_20260627_094343_Lexify" src="https://github.com/user-attachments/assets/faa73dd3-abac-4a16-ade3-bb7d310e02c8" />
+<img width="1080" height="2280" alt="Screenshot_20260627_094238_Lexify" src="https://github.com/user-attachments/assets/c2fc8a42-3164-4012-ab17-4bf0aa710a81" />
+<img width="1080" height="2280" alt="Screenshot_20260627_094229_Lexify" src="https://github.com/user-attachments/assets/e3d9938f-69cd-4d51-8d6e-32bd4cd4d147" />
+<img width="1080" height="2280" alt="Screenshot_20260627_094224_Lexify" src="https://github.com/user-attachments/assets/c98b83ab-2512-4896-8961-f2895a8393e6" />
+<img width="1080" height="2280" alt="Screenshot_20260627_094027_Lexify" src="https://github.com/user-attachments/assets/a2fd2a32-8ae7-4ed7-9e4c-e337c733e032" />
+<img width="1080" height="2280" alt="Screenshot_20260627_094018_Lexify" src="https://github.com/user-attachments/assets/de588814-7ee9-401e-90a6-3e5022785678" />
+<img width="1080" height="2280" alt="Screenshot_20260627_094009_Lexify" src="https://github.com/user-attachments/assets/514743ad-5d92-49a0-95a2-113aad2d9e44" />
+<img width="1080" height="2280" alt="Screenshot_20260627_093957_Lexify" src="https://github.com/user-attachments/assets/a939eedc-1e24-4ad0-a588-9510b58fd227" />
+
 
 ## Architecture & Patterns
 
