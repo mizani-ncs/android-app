@@ -11,4 +11,5 @@ data class ConversationUiState(
     val currentSessionId: String? = null,
     val showSidebar: Boolean = false,
     val isLoadingSessions: Boolean = false,
+    val isConnectionError: Boolean = false,
 )

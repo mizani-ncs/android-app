@@ -5,14 +5,17 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.Add
@@ -25,10 +28,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -42,10 +46,11 @@ fun MessageInput(
     onSubmit: () -> Unit,
     enabled: Boolean,
     modifier: Modifier = Modifier,
+    focusRequester: FocusRequester = FocusRequester(),
 ) {
     val focusManager = LocalFocusManager.current
     val hasText = value.isNotBlank()
-    val shape = RoundedCornerShape(100)
+    val shape = RoundedCornerShape(40.dp)
 
     Box(
         modifier = modifier
@@ -55,7 +60,7 @@ fun MessageInput(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(70.dp)
+                .heightIn(min = 70.dp, max = 200.dp)
                 .background(
                     color = if (enabled) MaterialTheme.colorScheme.surfaceContainer
                     else MaterialTheme.colorScheme.surfaceContainerLow,
@@ -65,7 +70,7 @@ fun MessageInput(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(70.dp)
+                    .heightIn(min = 70.dp)
                     .padding(start = 6.dp, end = 10.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
@@ -92,10 +97,15 @@ fun MessageInput(
                             modifier = Modifier.fillMaxWidth(),
                         )
                     }
+                    val scrollState = rememberScrollState()
                     BasicTextField(
                         value = value,
                         onValueChange = onValueChange,
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(2.dp)
+                            .focusRequester(focusRequester)
+                            .verticalScroll(scrollState),
                         enabled = enabled,
                         textStyle = LocalTextStyle.current.copy(
                             color = MaterialTheme.colorScheme.onSurface,

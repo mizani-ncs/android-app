@@ -71,6 +71,7 @@
     <!-- Errors -->
     <string name="error_network">Erreur réseau. Veuillez réessayer.</string>
     <string name="no_internet">Pas de connexion Internet.</string>
+    <string name="retry">Réessayer</string>
     <string name="error_unknown">Une erreur s\'est produite.</string>
     <string name="required_field">Ce champ est requis.</string>
     <string name="invalid_email">E-mail invalide.</string>

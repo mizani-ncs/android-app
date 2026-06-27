@@ -10,4 +10,5 @@ sealed interface ConversationIntent {
     data object NewSession : ConversationIntent
     data object DismissError : ConversationIntent
     data object Logout : ConversationIntent
+    data object RetryConnection : ConversationIntent
 }

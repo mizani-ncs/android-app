@@ -61,6 +61,10 @@ class ConversationViewModel(
             is ConversationIntent.NewSession -> initSession()
             is ConversationIntent.DismissError -> _state.update { it.copy(error = null) }
             is ConversationIntent.Logout -> logout()
+            is ConversationIntent.RetryConnection -> {
+                _state.update { it.copy(isConnectionError = false) }
+                initSession()
+            }
         }
     }
 
@@ -75,6 +79,7 @@ class ConversationViewModel(
                         items = emptyList(),
                         isLoadingSessions = false,
                         showSidebar = false,
+                        isConnectionError = false,
                     )
                 }
                 subscribeToWidgetPush(session.id)
@@ -171,6 +176,12 @@ class ConversationViewModel(
         subscriptionJob?.cancel()
         subscriptionJob = viewModelScope.launch(Dispatchers.IO) {
             widgetPushDataSource.subscribe(sessionId).collect { card ->
+                if (card == null) {
+                    _state.update {
+                        it.copy(isConnectionError = true, isAwaitingResponse = false)
+                    }
+                    return@collect
+                }
                 if (card.cardType == "text") {
                     val text = try {
                         val json = kotlinx.serialization.json.Json.parseToJsonElement(card.payload)
