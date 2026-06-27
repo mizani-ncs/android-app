@@ -1,4 +1,4 @@
-# Mizan — AI Legal Companion for Algerian Citizens
+# Lexify — AI Legal Companion for Algerian Citizens
 
 > **Hackathon:** NCS x Samba | **Track:** Android App  
 > **Theme:** Empowering Algerian citizens with AI-driven legal assistance
@@ -20,9 +20,9 @@
 
 ## App Idea
 
-**Mizan** (ميزان — *balance / justice* in Arabic) is an Android application that provides Algerian citizens with **free, AI-powered legal guidance** in Arabic and French. Users describe their legal situation in natural language; Mizan responds with structured cards containing legal analysis, document templates, lawyer recommendations, deadline reminders, and booking options — all tailored to Algerian law.
+**Lexify** (ميزان — *balance / justice* in Arabic) is an Android application that provides Algerian citizens with **free, AI-powered legal guidance** in Arabic and French. Users describe their legal situation in natural language; Lexify responds with structured cards containing legal analysis, document templates, lawyer recommendations, deadline reminders, and booking options — all tailored to Algerian law.
 
-**Why Mizan?** Legal aid in Algeria is scarce, expensive, and inaccessible to most citizens. Mizan bridges this gap by combining a fine-tuned LLM (the *Ariane* model) with a rich, interactive UI — no lawyer needed for preliminary advice.
+**Why Lexify?** Legal aid in Algeria is scarce, expensive, and inaccessible to most citizens. Lexify bridges this gap by combining a fine-tuned LLM (the *Ariane* model) with a rich, interactive UI — no lawyer needed for preliminary advice.
 
 ### Core Features (implemented M1–M5)
 
@@ -169,7 +169,7 @@ Each card composable is wrapped in a `SharedCard` layout that provides a **dynam
 ### Android
 - **minSdk**: 29 (Android 10)
 - **targetSdk**: 36 (Android 16)
-- **App name**: Mizan
+- **App name**: Lexify
 - **Package**: `ncshack.samba.mizan`
 
 ### Backend
